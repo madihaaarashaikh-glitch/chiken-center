@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chicken Center</title>
+
+<style>
+
+/* NAVBAR STYLING */
+nav{
+    width: 100%;
+    background-color: #8b1802;   /* your color */
+    padding: 10px 0;
+    overflow: hidden;
+}
+
+a{
+    color: #fff;
+    font-family: Fantasy;
+    text-decoration: none;
+    margin-right: 95px;
+    font-size: 22px;
+    float: left;
+    margin-top: 8px;
+}
+
+a:hover{
+    color: yellow;
+}
+
+.p{
+    font-family: Vivaldi;
+    color: white;
+    font-size: 33px; 
+    margin-top: 2px;
+    padding: 1px;
+    margin-right: 120px;
+}
+
+input{
+    margin-left: 53px;
+    margin-top: 8px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+#searchResults{
+    position: absolute;
+    background: #fff;
+    width: 200px;
+    margin-left: 53px;
+    border-radius: 5px;
+    display: none;
+    box-shadow: 0 0 10px #777;
+}
+
+#searchResults p{
+    margin: 0;
+    padding: 8px;
+    cursor: pointer;
+}
+
+#searchResults p:hover{
+    background: #eee;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+  padding:25px;
+}
+
+.box{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  transition:.3s;
+  text-align:center;
+}
+
+.box:hover{
+  transform:translateY(-8px);
+  box-shadow:0 8px 18px rgba(0,0,0,0.2);
+}
+
+.icon{
+  width:70px;
+  height:70px;
+  background:#8b1802;
+  color:white;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:35px;
+  margin:auto;
+  margin-bottom:15px;
+}
+
+.box h3{
+  color:#1e4620;
+  font-size:22px;
+  margin-bottom:10px;
+}
+
+.box p{
+  color:#444;
+  line-height:1.5;
+}
+
+/* ------------ CONTACT BOX ------------ */
+
+.contact-box{
+  width:90%;
+  margin:30px auto;
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.contact-box h2{
+  color:#1e4620;
+  margin-bottom:10px;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV BAR -->
+<nav>
+    <a class="p">Chicken Center</a>
+	 <a href="index.html">Home</a>
+    <a href="gallery.html">Products</a>
+    <a href="about us.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+
+    <input type="text" id="searchBox" placeholder="Search Chicken...">
+    <div id="searchResults"></div>
+</nav>
+<div class="grid">
+
+  <div class="box">
+    <div class="icon">🐔</div>
+    <h3>Fresh Chicken Cutting</h3>
+    <p>Curry cut, biryani cut, boneless, wings & drumsticks available daily.</p>
+  </div>
+
+  <div class="box">
+    <div class="icon">🚚</div>
+    <h3>Home Delivery</h3>
+    <p>Fast chicken delivery with hygienic packing.</p>
+  </div>
+
+  <div class="box">
+    <div class="icon">🐓</div>
+    <h3>Live Broiler Chicken</h3>
+    <p>Fresh live chicken available daily.</p>
+  </div>
+
+  <div class="box">
+    <div class="icon">📦</div>
+    <h3>Wholesale Supply</h3>
+    <p>Hotels & functions के लिए bulk chicken delivery.</p>
+  </div>
+
+  <div class="box">
+    <div class="icon">🥚</div>
+    <h3>Egg Supply</h3>
+    <p>Fresh egg trays available at best price.</p>
+  </div>
+
+  <div class="box">
+    <div class="icon">🧼</div>
+    <h3>Cleaning & Packing</h3>
+    <p>Clean hygienic chicken with proper packing.</p>
+  </div>
+
+</div>
+
+<!-- CONTACT -->
+<div class="contact-box">
+  <h2>📞 Contact For Orders</h2>
+  <p>Call / WhatsApp: <b>+91 9325250909</b></p>
+  <p>94/244, near Kanna Chowk, Jodbhavi Peth, Solapur, Maharashtra 413002</p>
+</div>
+
+</body>
+</html>
+
+<script>
+// SEARCH SUGGESTIONS
+let items = [
+    "Chicken Biryani",
+    "Chicken 65",
+    "Chicken Tandoori",
+    "Chicken Fry",
+    "Chicken Curry",
+    "Chicken Popcorn",
+    "Chicken Shawarma"
+];
+
+const searchBox = document.getElementById("searchBox");
+const searchResults = document.getElementById("searchResults");
+
+searchBox.addEventListener("keyup", () => {
+    let query = searchBox.value.toLowerCase();
+    searchResults.innerHTML = "";
+
+    if(query === ""){
+        searchResults.style.display = "none";
+        return;
+    }
+
+    let filtered = items.filter(item => item.toLowerCase().includes(query));
+
+    if(filtered.length > 0){
+        searchResults.style.display = "block";
+        filtered.forEach(result => {
+            let p = document.createElement("p");
+            p.innerText = result;
+            p.onclick = () => {
+                searchBox.value = result;
+                searchResults.style.display = "none";
+            }
+            searchResults.appendChild(p);
+        });
+    } else {
+        searchResults.style.display = "block";
+        searchResults.innerHTML = "<p>No Result Found</p>";
+    }
+});
+</script>
+
+
